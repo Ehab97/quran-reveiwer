@@ -340,6 +340,13 @@ function SurahReview({
     interimRef.current = "";
     if (silenceRef.current) clearTimeout(silenceRef.current);
 
+    // Abort the current session immediately — prevents stale results from the
+    // old verse bleeding into the new verse's word reveal.
+    if (recRef.current) {
+      try { recRef.current.onend = null; recRef.current.abort(); } catch {}
+      recRef.current = null;
+    }
+
     const next = verseIdxRef.current + 1;
     if (next >= totalVerses) {
       console.log("[COMPLETE]");
@@ -348,6 +355,10 @@ function SurahReview({
     } else {
       verseIdxRef.current = next;
       setVerseIndex(next);
+      // Start fresh recognition for the new verse
+      setTimeout(() => {
+        if (phaseRef.current === "running") startRecRef.current();
+      }, 150);
     }
   };
   advanceRef.current = doAdvance;
@@ -844,26 +855,6 @@ function SurahReview({
               </select>
             </div>
           )}
-
-          {/* Auto-advance delay */}
-          <div className="w-full max-w-xs">
-            <label className={`block text-xs font-medium mb-2 ${textMuted}`}>{t.review.delayLabel}</label>
-            <div className="flex gap-2">
-              {delayOptions.map(d => (
-                <button
-                  key={d}
-                  onClick={() => setSilenceDelay(d)}
-                  className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                    silenceDelay === d
-                      ? isDark ? "bg-emerald-700 text-white" : "bg-emerald-600 text-white"
-                      : isDark ? "bg-gray-700 text-gray-300 hover:bg-gray-600" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  {d < 1000 ? `${d}ms` : `${d / 1000}s`}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Start button */}
           <div className="flex flex-col items-center gap-4">
