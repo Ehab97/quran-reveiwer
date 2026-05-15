@@ -94,6 +94,10 @@ const ar = {
     listeningText: (interim: string) => interim ? `"${interim}"` : 'جاري الاستماع...',
     verseRevealed: 'تم كشف الآية',
     notFound: 'السورة غير موجودة',
+    tapToStart: 'انقر على الميكروفون لبدء المراجعة',
+    stop: 'إيقاف',
+    repeat: 'تكرار',
+    delayLabel: 'التقدم التلقائي',
   },
 };
 
@@ -191,6 +195,10 @@ const en = {
     listeningText: (interim: string) => interim ? `"${interim}"` : 'Listening…',
     verseRevealed: 'Verse revealed',
     notFound: 'Surah not found',
+    tapToStart: 'Tap the mic to start the review',
+    stop: 'Stop',
+    repeat: 'Repeat',
+    delayLabel: 'Auto-advance delay',
   },
 };
 
