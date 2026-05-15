@@ -23,6 +23,7 @@ export default function App() {
     { path: '/search', label: t.nav.search, icon: Search },
     { path: '/bookmarks', label: t.nav.saved, icon: Bookmark },
   ];
+  
   return (
     <div className={`flex flex-col h-screen max-h-screen overflow-hidden ${bodyBg}`}>
       {!isReaderPage && (
